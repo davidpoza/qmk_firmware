@@ -6,19 +6,24 @@ enum custom_keycodes {
   WORDREFERENCE = SAFE_RANGE, // can always be here
   PASSWORD1,
   USUARIO1,
-  PASSWORD2
+  PASSWORD2,
+  PASSWORD3,
+  PASSWORD4,
+  SWITCH_SOUND,
+  SF10,
+  SF9
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_ortho_3x3(
-        KC_LEFT,        KC_CALC,         KC_MPLY,
-        KC_VOLD,        WORDREFERENCE,   KC_VOLU,
+        SF9,        KC_CALC,         SF10,
+        KC_VOLD,        SWITCH_SOUND,   KC_VOLU,
         LT(1, KC_MPRV), KC_DOWN,         KC_ENT
     ),
     [1] = LAYOUT_ortho_3x3(
         KC_F2,  KC_ESC, RESET,
         USUARIO1,   PASSWORD1,   PASSWORD2,
-        KC_ESC,   KC_F3,   KC_F4
+        KC_ESC,   PASSWORD3,   PASSWORD4
     )
 };
 
@@ -72,6 +77,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case PASSWORD2:
                 if (record->event.pressed) {
                     SEND_STRING(PASS2);
+                }
+                return true;
+        case PASSWORD3:
+                if (record->event.pressed) {
+                    SEND_STRING(PASS3);
+                }
+                return true;
+        case PASSWORD4:
+                if (record->event.pressed) {
+                    SEND_STRING(PASS4);
+                }
+                return true;
+        case SWITCH_SOUND:
+                if (record->event.pressed) {
+                    SEND_STRING( SS_LALT(SS_LCTL(SS_TAP(X_F11))) );
+                }
+                return true;
+        case SF10:
+                if (record->event.pressed) {
+                    SEND_STRING( SS_LALT(SS_LCTL(SS_TAP(X_F10))) );
+                }
+                return true;
+        case SF9:
+                if (record->event.pressed) {
+                    SEND_STRING( SS_LALT(SS_LCTL(SS_TAP(X_F9))) );
                 }
                 return true;
         default:
