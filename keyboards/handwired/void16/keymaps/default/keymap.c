@@ -25,6 +25,7 @@ enum custom_keycodes {
   PASSWORD3,
   PASSWORD4,
   SWITCH_SOUND,
+  MUTE_MICRO,
   SF10,
   SF9,
   CYCLE_LAYER,
@@ -91,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT_ortho_4x4(
     SF9,    KC_CALC,  KC_P9,  KC_ESC,
     KC_VOLD,  SWITCH_SOUND,   KC_VOLU,    CYCLE_LAYER,
-    KC_P1,    KC_MPRV,  KC_P3,    KC_TAB,
+    KC_P1,    MUTE_MICRO,     KC_AUDIO_MUTE,    KC_TAB,
     LT(_PASS, KC_MPRV), KC_P0,   KC_PDOT,  KC_ENTER
 ),
 
@@ -117,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_P7,    KC_P8,  KC_P9,    KC_BSPC,
     KC_P4,    KC_P5,  KC_P6,    CYCLE_LAYER,
     KC_P1,    KC_P2,  KC_P3,    KC_TAB,
-    KC_ESC, KC_P0,   KC_PDOT,  KC_ENTER
+    KC_P0, KC_PDOT,   KC_ESC,  KC_ENTER
 ),
 };
 
@@ -192,7 +193,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
         case SWITCH_SOUND:
                 if (record->event.pressed) {
-                    SEND_STRING( SS_LALT(SS_LCTL(SS_TAP(X_F11))) );
+                    SEND_STRING( SS_LSFT(SS_LALT(SS_LCTL(SS_TAP(X_S)))) );
+                }
+                return true;
+        case MUTE_MICRO:
+                if (record->event.pressed) {
+                    SEND_STRING( SS_LSFT(SS_LALT(SS_LCTL(SS_TAP(X_M)))) );
                 }
                 return true;
         case SF10:
