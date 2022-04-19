@@ -26,14 +26,45 @@ const key_override_t **key_overrides = (const key_override_t *[]){
     NULL // Null terminate the array of overrides!
 };
 
+void tdStart(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_code(KC_QUOT);
+    } else if (state->count == 2) {
+        register_code(KC_MINS);
+    } else {
+        register_code(KC_LBRC);
+        clear_keyboard();
+    }
+}
+
+void tdReset(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        unregister_code(KC_QUOT);
+    } else if (state->count == 2) {
+        unregister_code(KC_MINS);
+    } else {
+        unregister_code(KC_LBRC);
+    }
+}
+
+enum {
+    TD_ACCENT,
+    TD_ENNE,
+};
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_ACCENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdStart, tdReset),
+    [TD_ENNE] = ACTION_TAP_DANCE_DOUBLE(KC_N, KC_SCLN),
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
+       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
+      KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, TD(TD_ACCENT), KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    LT(4, KC_B),                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
+      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    LT(4, KC_B),                         TD(TD_ENNE),    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LALT,   MO(1),  KC_SPC,     KC_ENT,   MO(2), KC_LGUI
                                       //`--------------------------'  `--------------------------'
@@ -54,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TAB, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),       RALT(KC_6),  RALT(KC_QUOT),    RALT(KC_LBRC),  RALT(KC_RBRC),    RALT(KC_NUHS),    RALT(KC_0),
+      KC_TAB, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),       RALT(KC_6),      RALT(KC_LBRC), RALT(KC_QUOT), RALT(KC_NUHS),  RALT(KC_RBRC),  RALT(KC_0),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_CIRC,  RALT(KC_GRV), LSFT(KC_8), LSFT(KC_9), KC_LBRC,  KC_RBRC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|

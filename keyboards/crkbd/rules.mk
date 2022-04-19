@@ -19,6 +19,7 @@ AUDIO_ENABLE = no           # Audio output
 RGB_MATRIX_ENABLE = no
 RGB_MATRIX_DRIVER = WS2812
 KEY_OVERRIDE_ENABLE = yes
+TAP_DANCE_ENABLE = yes
 
 # if firmware size over limit, try this option
 # LTO_ENABLE = yes

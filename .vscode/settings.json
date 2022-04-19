@@ -9,6 +9,7 @@
         "**/*.bin": true
     },
     "files.associations": {
+        ".env": "dotenv",
         "*.h": "c",
         "*.c": "c",
         "*.inc": "c",
@@ -17,7 +18,9 @@
         "xstddef": "c",
         "type_traits": "c",
         "utility": "c",
-        "ranges": "c"
+        "ranges": "c",
+        "bitset": "c",
+        "chrono": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
