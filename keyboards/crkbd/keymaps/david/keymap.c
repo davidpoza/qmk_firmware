@@ -57,6 +57,76 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_ENNE] = ACTION_TAP_DANCE_DOUBLE(KC_N, KC_SCLN),
 };
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(0, KC_NO): // comma
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_COMM);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_COMM));
+            }
+            return false;
+        case LT(1, KC_NO): // dot
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_DOT);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_DOT));
+            }
+            return false;
+        case LT(2, KC_NO): // dash and underscore
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_SLSH);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_SLSH));
+            }
+            return false;
+        case LT(3, KC_NO): // plus and asterisk
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_RBRC);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_RBRC));
+            }
+            return false;
+        case LT(4, KC_NO): // great and less
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_NUBS);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_NUBS));
+            }
+            return false;
+        case LT(5, KC_NO): // slash and backlash
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(LSFT(KC_7));
+            } else if (record->event.pressed) {
+                tap_code16(RALT(KC_GRV));
+            }
+            return false;
+        case LT(6, KC_NO): // question marks ?¿
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_UNDS);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_EQL));
+            }
+            return false;
+        case LT(7, KC_NO): // ( and [
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(LSFT(KC_8));
+            } else if (record->event.pressed) {
+                tap_code16(RALT(KC_LBRC));
+            }
+            return false;
+        case LT(8, KC_NO): // ) and ]
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(LSFT(KC_9));
+            } else if (record->event.pressed) {
+                tap_code16(RALT(KC_RBRC));
+            }
+            return false;
+        default:
+            return true;
+    }
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -64,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, TD(TD_ACCENT), KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    LT(4, KC_B),                         TD(TD_ENNE),    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    LT(4, KC_B),                         TD(TD_ENNE),    KC_M, LT(0, KC_NO),  LT(1, KC_NO), LT(2, KC_NO),  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LALT,   MO(1),  KC_SPC,     KC_ENT,   MO(2), KC_LGUI
                                       //`--------------------------'  `--------------------------'
@@ -85,11 +155,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TAB, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),       RALT(KC_6),      RALT(KC_LBRC), RALT(KC_QUOT), RALT(KC_NUHS),  RALT(KC_RBRC),  RALT(KC_0),
+      KC_TAB, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),        XXXXXXX, LT(5, KC_NO), LT(7, KC_NO), LT(8, KC_NO),  LSFT(KC_0),  LT(6, KC_NO),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_CIRC,  RALT(KC_GRV), LSFT(KC_8), LSFT(KC_9), KC_LBRC,  KC_RBRC,
+      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_CIRC,  KC_UP, RALT(KC_QUOT), RALT(KC_NUHS), KC_LBRC,  LT(3, KC_NO),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_PLUS, KC_UNDS, KC_NUBS, S(KC_NUBS), KC_BACKSLASH, XXXXXXX,
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN, KC_RIGHT, LT(4, KC_NO), KC_BACKSLASH, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------
                                           KC_LGUI,   MO(3),  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'
