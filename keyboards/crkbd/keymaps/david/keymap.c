@@ -103,9 +103,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case LT(6, KC_NO): // question marks ?¿
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_UNDS);
+                tap_code16(LSFT(KC_0));
             } else if (record->event.pressed) {
-                tap_code16(LSFT(KC_EQL));
+                tap_code16(KC_UNDS);
             }
             return false;
         case LT(7, KC_NO): // ( and [
@@ -155,11 +155,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TAB, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),        XXXXXXX, LT(5, KC_NO), LT(7, KC_NO), LT(8, KC_NO),  LSFT(KC_0),  LT(6, KC_NO),
+      KC_TAB, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),        XXXXXXX, LT(5, KC_NO), LT(7, KC_NO), LT(8, KC_NO),  LT(6, KC_NO),  KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_CIRC,  KC_UP, RALT(KC_QUOT), RALT(KC_NUHS), KC_LBRC,  LT(3, KC_NO),
+      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_CIRC,  KC_UP, RALT(KC_QUOT), RALT(KC_NUHS), LT(3, KC_NO), KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN, KC_RIGHT, LT(4, KC_NO), KC_BACKSLASH, XXXXXXX,
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN, KC_RIGHT, LT(4, KC_NO), XXXXXXX, KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------
                                           KC_LGUI,   MO(3),  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'
