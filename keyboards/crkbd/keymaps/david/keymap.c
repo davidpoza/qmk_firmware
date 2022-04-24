@@ -19,177 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
-const key_override_t accent_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_QUOT, KC_MINS);
-
-const key_override_t **key_overrides = (const key_override_t *[]){
-    &accent_key_override,
-    NULL // Null terminate the array of overrides!
-};
-
-void tdStart(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code(KC_QUOT);
-    } else if (state->count == 2) {
-        register_code(KC_MINS);
-    } else {
-        register_code(KC_LBRC);
-        clear_keyboard();
-    }
-}
-
-void tdReset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code(KC_QUOT);
-    } else if (state->count == 2) {
-        unregister_code(KC_MINS);
-    } else {
-        unregister_code(KC_LBRC);
-    }
-}
-
-enum {
-    TD_ACCENT,
-    TD_ENNE,
-};
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_ACCENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdStart, tdReset),
-    [TD_ENNE] = ACTION_TAP_DANCE_DOUBLE(KC_N, KC_SCLN),
-};
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LT(0, KC_NO): // comma
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_COMM);
-            } else if (record->event.pressed) {
-                tap_code16(LSFT(KC_COMM));
-            }
-            return false;
-        case LT(1, KC_NO): // dot
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_DOT);
-            } else if (record->event.pressed) {
-                tap_code16(LSFT(KC_DOT));
-            }
-            return false;
-        case LT(2, KC_NO): // dash and underscore
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_SLSH);
-            } else if (record->event.pressed) {
-                tap_code16(LSFT(KC_SLSH));
-            }
-            return false;
-        case LT(3, KC_NO): // plus and asterisk
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_RBRC);
-            } else if (record->event.pressed) {
-                tap_code16(LSFT(KC_RBRC));
-            }
-            return false;
-        case LT(4, KC_NO): // great and less
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_NUBS);
-            } else if (record->event.pressed) {
-                tap_code16(LSFT(KC_NUBS));
-            }
-            return false;
-        case LT(5, KC_NO): // slash and backlash
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(LSFT(KC_7));
-            } else if (record->event.pressed) {
-                tap_code16(RALT(KC_GRV));
-            }
-            return false;
-        case LT(6, KC_NO): // question marks ?¿
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(LSFT(KC_0));
-            } else if (record->event.pressed) {
-                tap_code16(KC_UNDS);
-            }
-            return false;
-        case LT(7, KC_NO): // ( and [
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(LSFT(KC_8));
-            } else if (record->event.pressed) {
-                tap_code16(RALT(KC_LBRC));
-            }
-            return false;
-        case LT(8, KC_NO): // ) and ]
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(LSFT(KC_9));
-            } else if (record->event.pressed) {
-                tap_code16(RALT(KC_RBRC));
-            }
-            return false;
-        default:
-            return true;
-    }
-}
-
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [0] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, TD(TD_ACCENT), KC_DEL,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    LT(4, KC_B),                         TD(TD_ENNE),    KC_M, LT(0, KC_NO),  LT(1, KC_NO), LT(2, KC_NO),  KC_ENT,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LALT,   MO(1),  KC_SPC,     KC_ENT,   MO(2), KC_LGUI
-                                      //`--------------------------'  `--------------------------'
-
-  ),
-
-  [1] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TAB, LSFT(KC_TAB), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_UP,   XXXXXXX,  KC_HOME, KC_PGUP, KC_DEL,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LGUI,                      KC_LEFT, KC_DOWN, KC_RIGHT, KC_END, KC_PGDN, KC_ENT,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______,  KC_SPC,    KC_ENT,   MO(3), KC_RALT
-                                      //`--------------------------'  `--------------------------'
-  ),
-
-  [2] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TAB, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),        XXXXXXX, LT(5, KC_NO), LT(7, KC_NO), LT(8, KC_NO),  LT(6, KC_NO),  KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_CIRC,  KC_UP, RALT(KC_QUOT), RALT(KC_NUHS), LT(3, KC_NO), KC_DEL,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN, KC_RIGHT, LT(4, KC_NO), XXXXXXX, KC_ENT,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------
-                                          KC_LGUI,   MO(3),  KC_SPC,     KC_ENT, _______, KC_RALT
-                                      //`--------------------------'  `--------------------------'
-  ),
-
-  [3] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      RESET, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,                                 KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F12,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
-                                      //`--------------------------'  `--------------------------'
-  ),
-
-  [4] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, KC_LGUI,  KC_SPC,     KC_ENT, _______, KC_RALT
-                                      //`--------------------------'  `--------------------------'
-  )
-};
-
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   if (!is_keyboard_master()) {
@@ -287,10 +116,182 @@ bool oled_task_user(void) {
     return false;
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    set_keylog(keycode, record);
-  }
-  return true;
-}
 #endif // OLED_ENABLE
+
+const key_override_t accent_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_QUOT, KC_MINS);
+
+const key_override_t **key_overrides = (const key_override_t *[]){
+    &accent_key_override,
+    NULL // Null terminate the array of overrides!
+};
+
+void tdStart(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_code(KC_QUOT);
+    } else if (state->count == 2) {
+        register_code(KC_MINS);
+    } else {
+        register_code(KC_LBRC);
+        clear_keyboard();
+    }
+}
+
+void tdReset(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        unregister_code(KC_QUOT);
+    } else if (state->count == 2) {
+        unregister_code(KC_MINS);
+    } else {
+        unregister_code(KC_LBRC);
+    }
+}
+
+enum {
+    TD_ACCENT,
+    TD_ENNE,
+};
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_ACCENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdStart, tdReset),
+    [TD_ENNE] = ACTION_TAP_DANCE_DOUBLE(KC_N, KC_SCLN),
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    #ifdef OLED_ENABLE
+    if (record->event.pressed) {
+        set_keylog(keycode, record);
+    }
+    #endif
+    switch (keycode) {
+        case LT(0, KC_NO): // comma
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_COMM);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_COMM));
+            }
+            return false;
+        case LT(1, KC_NO): // dot
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_DOT);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_DOT));
+            }
+            return false;
+        case LT(2, KC_NO): // dash and underscore
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_SLSH);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_SLSH));
+            }
+            return false;
+        case LT(3, KC_NO): // plus and asterisk
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_RBRC);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_RBRC));
+            }
+            return false;
+        case LT(4, KC_NO): // great and less
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_NUBS);
+            } else if (record->event.pressed) {
+                tap_code16(LSFT(KC_NUBS));
+            }
+            return false;
+        case LT(5, KC_NO): // slash and backlash
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(LSFT(KC_7));
+            } else if (record->event.pressed) {
+                tap_code16(RALT(KC_GRV));
+            }
+            return false;
+        case LT(6, KC_NO): // question marks ?¿
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(LSFT(KC_0));
+            } else if (record->event.pressed) {
+                tap_code16(KC_UNDS);
+            }
+            return false;
+        case LT(7, KC_NO): // ( and [
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(LSFT(KC_8));
+            } else if (record->event.pressed) {
+                tap_code16(RALT(KC_LBRC));
+            }
+            return false;
+        case LT(8, KC_NO): // ) and ]
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(LSFT(KC_9));
+            } else if (record->event.pressed) {
+                tap_code16(RALT(KC_RBRC));
+            }
+            return false;
+        default:
+            return true;
+    }
+}
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  [0] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+       MT(MOD_LGUI, KC_ESC),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, TD(TD_ACCENT), KC_DEL,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    LT(4, KC_B),                         TD(TD_ENNE),    KC_M, LT(0, KC_NO),  LT(1, KC_NO), LT(2, KC_NO),  KC_ENT,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LALT,   MO(1),  KC_SPC,     KC_ENT,   MO(2), XXXXXXX
+                                      //`--------------------------'  `--------------------------'
+
+  ),
+
+  [1] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+       KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_TAB, LSFT(KC_TAB), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_UP,   XXXXXXX,  KC_HOME, KC_PGUP, KC_DEL,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LGUI,                      KC_LEFT, KC_DOWN, KC_RIGHT, KC_END, KC_PGDN, KC_ENT,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______,  KC_SPC,    KC_ENT,   MO(3), KC_RALT
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [2] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      KC_TAB, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),        XXXXXXX, LT(5, KC_NO), LT(7, KC_NO), LT(8, KC_NO),  LT(6, KC_NO),  KC_BSPC,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_CIRC,  KC_UP, RALT(KC_QUOT), RALT(KC_NUHS), LT(3, KC_NO), KC_DEL,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN, KC_RIGHT, LT(4, KC_NO), XXXXXXX, KC_ENT,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------
+                                          KC_LGUI,   MO(3),  KC_SPC,     KC_ENT, _______, KC_RALT
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [3] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      RESET, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,                                 KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F12,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [4] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          XXXXXXX, KC_LGUI,  KC_SPC,     KC_ENT, _______, KC_RALT
+                                      //`--------------------------'  `--------------------------'
+  )
+};
+
+
