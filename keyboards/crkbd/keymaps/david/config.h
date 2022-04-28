@@ -75,6 +75,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
 #define TAPPING_TERM 185
+#define AUTO_SHIFT_TIMEOUT 190
+
+
+
+
 #ifdef RGB_MATRIX_ENABLE
 //#define RGB_MATRIX_KEYPRESSES // reacts to keypresses
 // #define RGB_MATRIX_KEYRELEASES // reacts to keyreleases (instead of keypresses)
