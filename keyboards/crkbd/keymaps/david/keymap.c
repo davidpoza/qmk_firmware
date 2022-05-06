@@ -151,6 +151,10 @@ enum {
     TD_ENNE,
 };
 
+enum custom_keycodes {
+  MACRO_MD_CODE = SAFE_RANGE, // can always be here
+};
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_ACCENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdStart, tdReset),
     [TD_ENNE] = ACTION_TAP_DANCE_DOUBLE(KC_N, KC_SCLN),
@@ -163,6 +167,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     #endif
     switch (keycode) {
+        case MACRO_MD_CODE: // comma
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_LBRC));
+                SEND_STRING(SS_TAP(X_LBRC));
+                SEND_STRING(SS_TAP(X_LBRC));
+                SEND_STRING(SS_TAP(X_ENTER));
+                SEND_STRING(SS_TAP(X_LBRC));
+                SEND_STRING(SS_TAP(X_LBRC));
+                SEND_STRING(SS_TAP(X_LBRC));
+                SEND_STRING(SS_TAP(X_ENTER));
+                }
+            return true;
         case LT(0, KC_NO): // comma
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KC_COMM);
@@ -263,7 +279,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_CIRC,  KC_UP, RALT(KC_QUOT), RALT(KC_NUHS), LT(3, KC_NO), KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN, KC_RIGHT, LT(4, KC_NO), XXXXXXX, KC_ENT,
+      KC_LCTL, XXXXXXX, XXXXXXX, MACRO_MD_CODE, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN, KC_RIGHT, LT(4, KC_NO), XXXXXXX, KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------
                                           KC_LGUI,   MO(3),  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'
