@@ -172,12 +172,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_TAP(X_LBRC));
                 SEND_STRING(SS_TAP(X_LBRC));
                 SEND_STRING(SS_TAP(X_LBRC));
-                SEND_STRING(SS_TAP(X_ENTER));
+                SEND_STRING(SS_TAP(X_SPACE));
+                SEND_STRING(SS_DOWN(X_LSHIFT)SS_TAP(X_ENTER)SS_UP(X_LSHIFT));
                 SEND_STRING(SS_TAP(X_LBRC));
                 SEND_STRING(SS_TAP(X_LBRC));
                 SEND_STRING(SS_TAP(X_LBRC));
-                SEND_STRING(SS_TAP(X_ENTER));
-                }
+                SEND_STRING(SS_TAP(X_SPACE));
+                SEND_STRING(SS_DOWN(X_LSHIFT)SS_TAP(X_ENTER)SS_UP(X_LSHIFT));
+            }
             return true;
         case LT(0, KC_NO): // comma
             if (record->tap.count && record->event.pressed) {
