@@ -29,6 +29,7 @@ enum custom_keycodes {
   SF10,
   SF9,
   CYCLE_LAYER,
+  COLOR_PICKER
 };
 
 // Defines names for use in layer keycodes and the keymap
@@ -93,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     SF9,    KC_CALC,  KC_P9,  KC_ESC,
     KC_VOLD,  SWITCH_SOUND,   KC_VOLU,    CYCLE_LAYER,
     KC_P1,    MUTE_MICRO,     KC_AUDIO_MUTE,    KC_TAB,
-    LT(_PASS, KC_MPRV), KC_P0,   KC_PDOT,  KC_ENTER
+    LT(_PASS, KC_MPRV), COLOR_PICKER,   KC_PDOT,  KC_ENTER
 ),
 
 /* FN
@@ -209,6 +210,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case SF9:
                 if (record->event.pressed) {
                     SEND_STRING( SS_LALT(SS_LCTL(SS_TAP(X_F9))) );
+                }
+                return true;
+        case COLOR_PICKER:
+                if (record->event.pressed) {
+                    SEND_STRING( SS_LWIN(SS_LSFT(SS_TAP(X_C))) );
                 }
                 return true;
         case CYCLE_LAYER:
