@@ -16,9 +16,9 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_ortho_3x3(
-        SF9,        KC_CALC,         SF10,
-        KC_VOLD,        SWITCH_SOUND,   KC_VOLU,
-        LT(1, KC_MPRV), KC_DOWN,         KC_ENT
+        KC_F13,        KC_F14,         KC_F15,
+        KC_F16,        KC_F17,   KC_F18,
+        LT(1, KC_MPRV), KC_F19,         KC_F20
     ),
     [1] = LAYOUT_ortho_3x3(
         KC_F2,  KC_ESC, RESET,
