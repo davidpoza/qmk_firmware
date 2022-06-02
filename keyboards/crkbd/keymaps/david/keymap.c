@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
+#include "passwords.h"
+
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -153,6 +155,12 @@ enum {
 
 enum custom_keycodes {
   MACRO_MD_CODE = SAFE_RANGE, // can always be here
+  PASSWORD1,
+  USUARIO1,
+  USUARIO2,
+  PASSWORD2,
+  PASSWORD3,
+  PASSWORD4,
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -244,6 +252,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(RALT(KC_RBRC));
             }
             return false;
+        case USUARIO2:
+                if (record->event.pressed) {
+                    SEND_STRING(USER2);
+                }
+                return true;
+        case USUARIO1:
+                if (record->event.pressed) {
+                    SEND_STRING(USER1);
+                }
+                return true;
+        case PASSWORD1:
+                if (record->event.pressed) {
+                    SEND_STRING(PASS1);
+                }
+                return true;
+        case PASSWORD2:
+                if (record->event.pressed) {
+                    SEND_STRING(PASS2);
+                }
+                return true;
+        case PASSWORD3:
+                if (record->event.pressed) {
+                    SEND_STRING(PASS3);
+                }
+                return true;
+        case PASSWORD4:
+                if (record->event.pressed) {
+                    SEND_STRING(PASS4);
+                }
+                return true;
         default:
             return true;
     }
@@ -291,9 +329,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       RESET, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,                                 KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F12,
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      USUARIO1, USUARIO2, XXXXXXX, XXXXXXX, XXXXXXX, KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      PASSWORD1, PASSWORD2, PASSWORD3, PASSWORD4, XXXXXXX, KC_PSCR,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'

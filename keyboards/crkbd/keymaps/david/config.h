@@ -96,7 +96,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_MATRIX_VAL_STEP 8
 #define RGB_MATRIX_SPD_STEP 10
 
-#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_GRADIENT_LEFT_RIGHT
+#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_CYCLE_LEFT_RIGHT
      /* Enable the animations you want/need.  You may need to enable only a small number of these because       *
  * they take up a lot of space.  Enable and confirm that you can still successfully compile your firmware. */
 // RGB Matrix Animation modes. Explicitly enabled
@@ -104,7 +104,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // https://docs.qmk.fm/#/feature_rgb_matrix?id=rgb-matrix-effects
 // #define ENABLE_RGB_MATRIX_ALPHAS_MODS
 //#define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
-#define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
+//#define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
 //#define ENABLE_RGB_MATRIX_BREATHING
 // #define ENABLE_RGB_MATRIX_BAND_SAT
 // #define ENABLE_RGB_MATRIX_BAND_VAL
@@ -113,7 +113,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define ENABLE_RGB_MATRIX_BAND_SPIRAL_SAT
 // #define ENABLE_RGB_MATRIX_BAND_SPIRAL_VAL
 //#define ENABLE_RGB_MATRIX_CYCLE_ALL
-// #define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
+#define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
 // #define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
 // #define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
 // #define ENABLE_RGB_MATRIX_CYCLE_OUT_IN
