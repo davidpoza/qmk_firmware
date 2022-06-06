@@ -161,6 +161,7 @@ enum custom_keycodes {
   PASSWORD2,
   PASSWORD3,
   PASSWORD4,
+  PASSWORD5,
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -282,6 +283,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING(PASS4);
                 }
                 return true;
+        case PASSWORD5:
+                if (record->event.pressed) {
+                    SEND_STRING(PASS5);
+                }
+                return true;
         default:
             return true;
     }
@@ -331,7 +337,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      USUARIO1, USUARIO2, XXXXXXX, XXXXXXX, XXXXXXX, KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      PASSWORD1, PASSWORD2, PASSWORD3, PASSWORD4, XXXXXXX, KC_PSCR,
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      PASSWORD1, PASSWORD5, PASSWORD2, PASSWORD3, PASSWORD4, KC_PSCR,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'
