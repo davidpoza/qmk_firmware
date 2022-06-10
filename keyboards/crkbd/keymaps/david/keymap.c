@@ -336,9 +336,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       RESET, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,                                 KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      USUARIO1, USUARIO2, XXXXXXX, XXXXXXX, XXXXXXX, KC_F12,
+      KC_CAPS_LOCK, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX,                      USUARIO1, USUARIO2, XXXXXXX, XXXXXXX, XXXXXXX, KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      PASSWORD1, PASSWORD5, PASSWORD2, PASSWORD3, PASSWORD4, KC_PSCR,
+      XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      PASSWORD1, PASSWORD5, PASSWORD2, PASSWORD3, PASSWORD4, KC_PSCR,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'
