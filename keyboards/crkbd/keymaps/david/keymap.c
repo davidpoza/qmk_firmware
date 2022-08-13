@@ -123,8 +123,29 @@ bool oled_task_user(void) {
 
 const key_override_t accent_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_QUOT, KC_MINS);
 
+const key_override_t zero_key_override = ko_make_basic(MOD_MASK_GUI, KC_P0, KC_P0);
+const key_override_t one_key_override = ko_make_basic(MOD_MASK_GUI, KC_P1, KC_P1);
+const key_override_t two_key_override = ko_make_basic(MOD_MASK_GUI, KC_P2, KC_P2);
+const key_override_t three_key_override = ko_make_basic(MOD_MASK_GUI, KC_P3, KC_P3);
+const key_override_t four_key_override = ko_make_basic(MOD_MASK_GUI, KC_P4, KC_P4);
+const key_override_t five_key_override = ko_make_basic(MOD_MASK_GUI, KC_P5, KC_P5);
+const key_override_t six_key_override = ko_make_basic(MOD_MASK_GUI, KC_P6, KC_P6);
+const key_override_t seven_key_override = ko_make_basic(MOD_MASK_GUI, KC_P7, KC_P7);
+const key_override_t eight_key_override = ko_make_basic(MOD_MASK_GUI, KC_P8, KC_P8);
+const key_override_t nine_key_override = ko_make_basic(MOD_MASK_GUI, KC_P9, KC_P9);
+
 const key_override_t **key_overrides = (const key_override_t *[]){
     &accent_key_override,
+    &zero_key_override,
+    &one_key_override,
+    &two_key_override,
+    &three_key_override,
+    &four_key_override,
+    &five_key_override,
+    &six_key_override,
+    &seven_key_override,
+    &eight_key_override,
+    &nine_key_override,
     NULL // Null terminate the array of overrides!
 };
 
@@ -310,7 +331,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
+       LCTL(KC_F13),    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TAB, LSFT(KC_TAB), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_UP,   XXXXXXX,  KC_HOME, KC_PGUP, KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -346,11 +367,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  XXXXXXX,
+      XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_P7,    KC_P8,    KC_P9,    KC_0,  XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX,  KC_P4,  KC_P5,  KC_P6,  XXXXXXX,  XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    KC_P0,  KC_P1,  KC_P2,  KC_P3,  XXXXXXX,  XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, KC_LGUI,  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'
